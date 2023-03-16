@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    env_file:
+      - .env
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+    networks:
+      - redis-network
+  redisinsight:
+    image: redislabs/redisinsight:1.13.1
+    restart: always
+    ports:
+      - 8001:8001
+    volumes:
+      - redisinsight:/db
+    depends_on:
+      - redis
+    networks:
+      - redis-network
+  rabbitmq:
+    image: rabbitmq:3.9.29-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    env_file:
+      - .env
+volumes:
+  postgres:
+  redis:
+  redisinsight:
+  rabbitmq:
+networks:
+  redis-network:
