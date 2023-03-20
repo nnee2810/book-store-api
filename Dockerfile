@@ -3,13 +3,13 @@ FROM node:18.15.0-alpine AS build
 
 WORKDIR /app
 
-COPY package*.json .env.prod /
+COPY package*.json .
 
 RUN yarn
 
-RUN yarn "prisma:prod generate"
-
 COPY . .
+
+RUN yarn prisma generate
 
 RUN yarn build
 
