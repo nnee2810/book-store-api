@@ -58,6 +58,6 @@ jobs:
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
             docker compose -f docker-compose.prod.yml down
-            docker compose -f docker-compose.prod.yml up -d
+            docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
             docker image prune -f
             exit
