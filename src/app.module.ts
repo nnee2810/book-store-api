@@ -32,8 +32,8 @@ import { UsersModule } from "./modules/users/users.module"
         REDIS_HOST: Joi.string().required(),
         REDIS_PORT: Joi.number().required(),
 
-        RABBITMQ_DEFAULT_USER: Joi.string().required(),
-        RABBITMQ_DEFAULT_PASS: Joi.string().required(),
+        RABBITMQ_USER: Joi.string().required(),
+        RABBITMQ_PASS: Joi.string().required(),
         RABBITMQ_HOST: Joi.string().required(),
         RABBITMQ_PORT: Joi.number().required(),
         RABBITMQ_URL: Joi.string().required(),

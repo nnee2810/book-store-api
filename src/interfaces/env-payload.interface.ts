@@ -13,8 +13,8 @@ export interface EnvPayload {
   REDIS_HOST: string
   REDIS_PORT: number
 
-  RABBITMQ_DEFAULT_USER: string
-  RABBITMQ_DEFAULT_PASS: string
+  RABBITMQ_USER: string
+  RABBITMQ_PASS: string
   RABBITMQ_HOST: string
   RABBITMQ_PORT: number
   RABBITMQ_URL: string
