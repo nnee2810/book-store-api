@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  book-store-api:
+    image: book-store-api
+    ports:
+      - 80:${PORT}
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+  postgres:
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    env_file:
+      - .env.prod
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+    networks:
+      - redis-network
+  redisinsight:
+    image: redislabs/redisinsight:1.13.1
+    ports:
+      - 8001:8001
+    volumes:
+      - redisinsight:/db
+    depends_on:
+      - redis
+    networks:
+      - redis-network
+  rabbitmq:
+    image: rabbitmq:3.9.29-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    env_file:
+      - .env.prod
+volumes:
+  postgres:
+  redis:
+  redisinsight:
+  rabbitmq:
+networks:
+  redis-network:
