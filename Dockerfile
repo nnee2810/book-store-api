@@ -7,6 +7,8 @@ COPY package*.json .
 
 RUN yarn
 
+RUN yarn "prisma:prod generate"
+
 COPY . .
 
 RUN yarn build
