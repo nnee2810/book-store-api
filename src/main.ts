@@ -14,8 +14,6 @@ async function bootstrap() {
   })
   const reflector = app.get(Reflector)
   const configService: ConfigService<EnvPayload> = app.get(ConfigService)
-  console.log(configService.get("DATABASE_URL"))
-
   const prismaService = app.get(PrismaService)
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
