@@ -10,6 +10,7 @@ services:
       - 5432:5432
     volumes:
       - postgres:/var/lib/postgresql/data
+
   redis:
     image: redis:alpine
     restart: on-failure:3
@@ -19,6 +20,7 @@ services:
       - redis:/data
     networks:
       - redis-network
+
   redisinsight:
     image: redislabs/redisinsight:1.13.1
     restart: on-failure:3
@@ -30,6 +32,7 @@ services:
       - redis
     networks:
       - redis-network
+
   rmq:
     image: rabbitmq:3.9.29-management-alpine
     environment:
