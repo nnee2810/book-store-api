@@ -2,7 +2,7 @@ version: "3.9"
 services:
   book-store-api:
     image: nnee2810/book-store-api
-    restart: unless-stopped
+    restart: on-failure:3
     environment:
       - PORT=${PORT}
     ports:
@@ -10,10 +10,15 @@ services:
     depends_on:
       - postgres
       - redis
-      - rabbitmq
+      - rmq
+    networks:
+      - postgres-network
+      - redis-network
+      - rmq-network
+
   postgres:
     image: postgres:alpine
-    restart: unless-stopped
+    restart: on-failure:3
     environment:
       - POSTGRES_USERNAME=${POSTGRES_USERNAME}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -21,10 +26,12 @@ services:
       - 5432:5432
     volumes:
       - postgres:/var/lib/postgresql/data
+    networks:
+      - postgres-network
 
   redis:
     image: redis:alpine
-    restart: unless-stopped
+    restart: on-failure:3
     ports:
       - 6379:6379
     volumes:
@@ -34,7 +41,7 @@ services:
 
   redisinsight:
     image: redislabs/redisinsight:1.13.1
-    restart: unless-stopped
+    restart: on-failure:3
     ports:
       - 8001:8001
     volumes:
@@ -44,22 +51,26 @@ services:
     networks:
       - redis-network
 
-  rabbitmq:
+  rmq:
     image: rabbitmq:3.9.29-management-alpine
-    restart: unless-stopped
+    restart: on-failure:3
     environment:
-      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
+      - RABBITMQ_DEFAULT_USER=${RMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RMQ_USER_PASS}
     ports:
       - 5672:5672
       - 15672:15672
     volumes:
-      - rabbitmq:/var/lib/rabbitmq
+      - rmq:/var/lib/rabbitmq
+    networks:
+      - rmq-network
 
 volumes:
   postgres:
   redis:
   redisinsight:
-  rabbitmq:
+  rmq:
 networks:
+  postgres-network:
   redis-network:
+  rmq-network:

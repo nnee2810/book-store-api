@@ -11,7 +11,7 @@ export class RmqService {
     return {
       transport: Transport.RMQ,
       options: {
-        urls: [this.configService.get<string>("RABBITMQ_URL")],
+        urls: [this.configService.get<string>("RMQ_URL")],
         queue,
         persistent: true,
       },
