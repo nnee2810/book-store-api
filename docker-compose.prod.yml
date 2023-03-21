@@ -56,7 +56,7 @@ services:
     restart: on-failure:3
     environment:
       - RABBITMQ_DEFAULT_USER=${RMQ_USER}
-      - RABBITMQ_DEFAULT_PASS=${RMQ_USER_PASS}
+      - RABBITMQ_DEFAULT_PASS=${RMQ_PASS}
     ports:
       - 5672:5672
       - 15672:15672
