@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  book-store-api:
+  api:
     image: nnee2810/book-store-api
     restart: on-failure:3
     environment:
